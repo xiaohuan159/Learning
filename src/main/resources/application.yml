@@ -1,0 +1,33 @@
+server:
+  port: 9001
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xiaohuan?characterEncoding=utf-8&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    username: root
+    password: root
+    hikari:
+      connection-timeout: 30000
+      minimum-idle: 5
+      maximum-pool-size: 20
+      auto-commit: true
+      idle-timeout: 600000
+  application:
+    name: learning
+
+eureka:
+  client:
+    register-with-eureka: true #服务注册,是否将自己注册到服务中
+    fetch-registry: true #服务发现,是否从eureka中获取注册信息
+    service-url:
+      defaultZone: http://localhost:30001/eureka/
+  instance:
+    prefer-ip-address: true #将自己的ip地址注册到Eureka服务中
+    ip-address: ${IP_ADDRESS:127.0.0.1}
+    instance-id: ${spring.application.name}-${server.port}
+ribbon:
+  okhttp:
+    enabled: true
+  eureka:
+    enabled: true
